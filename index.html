@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Data Entry</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Quality Data Entry</h1>
+
+    <form id="qualityForm">
+        <!-- Work Order -->
+        <label for="workOrder">Work Order:</label>
+        <input type="text" id="workOrder" name="workOrder" required>
+        
+        <!-- Spec Type -->
+        <label for="specType">Spec Type:</label>
+        <input type="text" id="specType" name="specType" required>
+
+        <!-- Gate Location -->
+        <label for="gateLocation">Gate Location:</label>
+        <select id="gateLocation" name="gateLocation" required>
+            <option value="Gate 1">Gate 1</option>
+            <option value="Gate 2">Gate 2</option>
+            <option value="Gate 3">Gate 3</option>
+            <option value="Final Gate">Final Gate</option>
+        </select>
+
+        <!-- Defect Description -->
+        <label for="defectDescription">Defect Description:</label>
+        <input type="text" id="defectDescription" name="defectDescription" required>
+
+        <!-- Was defect fixed? -->
+        <label for="defectFixed">Was the defect fixed?</label>
+        <select id="defectFixed" name="defectFixed" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <button type="submit">Submit Defect Report</button>
+    </form>
+</div>
+
+<script>
+    // Event listener to handle form submission
+    document.getElementById('qualityForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Collect form data
+        const formData = {
+            workOrder: document.getElementById('workOrder').value,
+            specType: document.getElementById('specType').value,
+            gateLocation: document.getElementById('gateLocation').value,
+            defectDescription: document.getElementById('defectDescription').value,
+            defectFixed: document.getElementById('defectFixed').value
+        };
+
+        // Submit the data to backend (using fetch)
+        fetch('http://your-backend-url.com/submitDefect', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => alert('Defect report submitted successfully!'))
+        .catch(error => alert('Error submitting defect report: ' + error));
+    });
+</script>
+
+</body>
+</html>
